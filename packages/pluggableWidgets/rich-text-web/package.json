@@ -1,7 +1,7 @@
 {
   "name": "@mendix/rich-text-web",
   "widgetName": "RichText",
-  "version": "2.3.0",
+  "version": "3.0.0",
   "description": "Rich inline or toolbar text editing",
   "copyright": "© Mendix Technology BV 2023. All rights reserved.",
   "repository": {
@@ -19,7 +19,7 @@
     "mpkName": "RichText.mpk"
   },
   "marketplace": {
-    "minimumMXVersion": "9.6.0",
+    "minimumMXVersion": "9.24.0",
     "appNumber": 74889,
     "appName": "Rich Text"
   },
@@ -46,23 +46,16 @@
     "@mendix/pluggable-widgets-tools": "^10.0.1",
     "@mendix/prettier-config-web-widgets": "workspace:*",
     "@mendix/run-e2e": "workspace:*",
+    "@mendix/widget-plugin-component-kit": "workspace:*",
     "@mendix/widget-plugin-platform": "workspace:*",
     "@mendix/widget-plugin-test-utils": "workspace:*",
-    "@mendix/widget-plugin-component-kit": "workspace:*",
-    "@rollup/plugin-json": "^4.1.0",
-    "@types/ckeditor4": "^4.20.2",
-    "@types/sanitize-html": "^1.27.2",
-    "cross-env": "^7.0.3",
-    "recursive-copy": "^2.0.14",
-    "through2": "^4.0.2"
+    "@rollup/plugin-dynamic-import-vars": "^2.1.2",
+    "@types/katex": "^0.16.7"
   },
   "dependencies": {
-    "@types/dompurify": "^2.4.0",
-    "@types/react-test-renderer": "^18.0.7",
-    "ckeditor4": "^4.22.1",
-    "ckeditor4-react": "^4.3.0",
-    "classnames": "^2.3.2",
-    "dompurify": "^2.4.7",
-    "react-test-renderer": "^18.2.0"
+    "@lexical/react": "^0.13.1",
+    "katex": "^0.16.9",
+    "lexical": "^0.13.1",
+    "y-websocket": "^1.5.4"
   }
 }

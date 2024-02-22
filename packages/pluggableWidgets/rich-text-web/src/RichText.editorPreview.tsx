@@ -12,7 +12,3 @@ export const preview = (props: RichTextPreviewProps): ReactElement => {
         </div>
     );
 };
-
-export function getPreviewCss(): string {
-    return require("./ui/RichTextEditorPreview.scss");
-}
