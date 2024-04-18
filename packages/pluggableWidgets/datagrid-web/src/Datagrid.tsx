@@ -205,6 +205,8 @@ const Container = observer((props: Props): ReactElement => {
             cellEventsController={cellEventsController}
             checkboxEventsController={checkboxEventsController}
             focusController={focusController}
+            queryParams={props.queryParams}
+            datasource={props.datasource}
         />
     );
 });

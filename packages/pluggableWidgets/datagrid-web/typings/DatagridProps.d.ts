@@ -60,6 +60,14 @@ export interface FilterListType {
     filter: ListAttributeValue<string | Big | boolean | Date>;
 }
 
+export interface QueryParamsType {
+    name: string;
+    attr?: ListAttributeValue<string | Big | boolean | Date>;
+    ref?: ListReferenceValue | ListReferenceSetValue;
+    refOptions?: ListValue;
+    refLabel?: ListExpressionValue<string>;
+}
+
 export interface ColumnsPreviewType {
     showContentAs: ShowContentAsEnum;
     attribute: string;
@@ -87,6 +95,14 @@ export interface ColumnsPreviewType {
 
 export interface FilterListPreviewType {
     filter: string;
+}
+
+export interface QueryParamsPreviewType {
+    name: string;
+    attr: string;
+    ref: string;
+    refOptions: {} | { caption: string } | { type: string } | null;
+    refLabel: string;
 }
 
 export interface DatagridContainerProps {
@@ -121,6 +137,8 @@ export interface DatagridContainerProps {
     configurationAttribute?: EditableValue<string>;
     filterList: FilterListType[];
     filtersPlaceholder?: ReactNode;
+    queryParams: QueryParamsType[];
+    queryBuilder?: ListWidgetValue;
     filterSectionTitle?: DynamicValue<string>;
     exportDialogLabel?: DynamicValue<string>;
     cancelExportLabel?: DynamicValue<string>;
@@ -164,6 +182,8 @@ export interface DatagridPreviewProps {
     onConfigurationChange: {} | null;
     filterList: FilterListPreviewType[];
     filtersPlaceholder: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
+    queryParams: QueryParamsPreviewType[];
+    queryBuilder: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     filterSectionTitle: string;
     exportDialogLabel: string;
     cancelExportLabel: string;

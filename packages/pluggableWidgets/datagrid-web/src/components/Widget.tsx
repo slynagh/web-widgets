@@ -1,9 +1,9 @@
 import { Pagination } from "@mendix/widget-plugin-grid/components/Pagination";
 import { SelectionStatus } from "@mendix/widget-plugin-grid/selection";
 import classNames from "classnames";
-import { ListActionValue, ObjectItem } from "mendix";
+import { ListActionValue, ObjectItem, ListValue } from "mendix";
 import { CSSProperties, ReactElement, ReactNode, createElement, useCallback, useState } from "react";
-import { PagingPositionEnum, PaginationEnum } from "../../typings/DatagridProps";
+import { PagingPositionEnum, PaginationEnum, DatagridContainerProps } from "../../typings/DatagridProps";
 import { WidgetPropsProvider } from "../helpers/useWidgetProps";
 import { CellComponent, EventsController } from "../typings/CellComponent";
 import { ColumnId, GridColumn } from "../typings/GridColumn";
@@ -74,6 +74,10 @@ export interface WidgetProps<C extends GridColumn, T extends ObjectItem = Object
 
     columnsSwap: (source: ColumnId, target: [ColumnId, "after" | "before"]) => void;
     columnsCreateSizeSnapshot: () => void;
+
+    datasource: ListValue;
+
+    queryParams?: DatagridContainerProps["queryParams"];
 }
 
 export const Widget = observer(<C extends GridColumn>(props: WidgetProps<C>): ReactElement => {
@@ -156,7 +160,11 @@ export const Widget = observer(<C extends GridColumn>(props: WidgetProps<C>): Re
                 exporting={exporting}
             >
                 {showTopBar && <WidgetTopBar>{pagination}</WidgetTopBar>}
-                {showHeader && <WidgetHeader headerTitle={headerTitle}>{headerContent}</WidgetHeader>}
+                {showHeader && (
+                    <WidgetHeader headerTitle={headerTitle} queryParams={props.queryParams} ds={props.datasource}>
+                        {headerContent}
+                    </WidgetHeader>
+                )}
                 <WidgetContent
                     isInfinite={isInfinite}
                     hasMoreItems={hasMoreItems}
