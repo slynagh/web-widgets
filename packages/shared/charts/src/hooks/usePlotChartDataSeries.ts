@@ -1,16 +1,16 @@
+import { ensure } from "@mendix/widget-plugin-platform/utils/ensure";
 import Big from "big.js";
 import {
-    ObjectItem,
     DynamicValue,
-    ListValue,
-    ListExpressionValue,
-    ListAttributeValue,
+    EditableValue,
     ListActionValue,
-    EditableValue
+    ListAttributeValue,
+    ListExpressionValue,
+    ListValue,
+    ObjectItem
 } from "mendix";
 import { useEffect, useState } from "react";
-import { ensure } from "@mendix/widget-plugin-platform/utils/ensure";
-import { Datum, PlotData } from "plotly.js";
+// import { Datum, PlotData } from "plotly.js";
 import { executeAction } from "@mendix/widget-plugin-platform/framework/execute-action";
 import { ExtraTraceProps } from "../components/types";
 
@@ -18,13 +18,9 @@ import { ExtraTraceProps } from "../components/types";
 type AttributeValue = EditableValue["value"];
 
 type PlotChartDataPoints = {
-    x: Datum[];
-    y: Datum[];
     hovertext: string[] | undefined;
-    hoverinfo: PlotData["hoverinfo"];
     dataSourceItems: ObjectItem[];
-    // We want this optional.
-    name?: PlotData["name"];
+    data: { x: string | number | Date | null; y: string | number | Date | null }[];
 };
 
 interface DataSourceItemGroup {
@@ -61,7 +57,7 @@ type MapperHelpers = {
     ): DynamicValue<T>["value"];
 };
 
-export type SeriesMapper<T> = (serie: T, dataPoints: PlotChartDataPoints, helpers: MapperHelpers) => Partial<PlotData>;
+export type SeriesMapper<T> = (serie: T, dataPoints: PlotChartDataPoints, helpers: MapperHelpers) => any;
 
 export function usePlotChartDataSeries<T extends PlotDataSeries>(
     series: T[],
@@ -214,24 +210,30 @@ function extractDataPoints(
 
         dataSourceItems = dataSource.items;
     }
-    const xData: PlotChartDataPoints["x"] = [];
-    const yData: PlotChartDataPoints["y"] = [];
+    // const xData: PlotChartDataPoints["x"] = [];
+    // const yData: PlotChartDataPoints["y"] = [];
+
+    const chartData: { x: string | number | Date | null; y: string | number | Date | null }[] = [];
     const hoverTextData: Array<string | undefined> = [];
 
     for (const item of dataSourceItems) {
         const x = xValue.get(item);
         const y = yValue.get(item);
+        chartData.push({
+            x: x.value instanceof Big ? x.value.toNumber() : x.value || null,
+            y: y.value instanceof Big ? y.value.toNumber() : y.value || null
+        });
 
-        if (!x.value) {
-            xData.push(null);
-        } else {
-            xData.push(x.value instanceof Big ? x.value.toNumber() : x.value);
-        }
-        if (!y.value) {
-            yData.push(null);
-        } else {
-            yData.push(y.value instanceof Big ? y.value.toNumber() : y.value);
-        }
+        // if (!x.value) {
+        //     xData.push(null);
+        // } else {
+        //     xData.push(x.value instanceof Big ? x.value.toNumber() : x.value);
+        // }
+        // if (!y.value) {
+        //     yData.push(null);
+        // } else {
+        //     yData.push(y.value instanceof Big ? y.value.toNumber() : y.value);
+        // }
 
         const tooltipHoverTextSource =
             series.dataSet === "dynamic" ? series.dynamicTooltipHoverText : series.staticTooltipHoverText;
@@ -239,46 +241,44 @@ function extractDataPoints(
     }
     return {
         ...(seriesName ? { name: seriesName } : {}),
-        x: xData,
-        y: yData,
+        data: chartData,
         dataSourceItems,
         hovertext: hoverTextData.some(text => text !== undefined && text !== "")
             ? (hoverTextData as string[])
-            : undefined,
-        hoverinfo: hoverTextData.some(text => text !== undefined && text !== "") ? "text" : "none"
+            : undefined
     };
 }
 
-type AggregationTypeEnum = "none" | "count" | "sum" | "avg" | "min" | "max" | "median" | "mode" | "first" | "last";
+// type AggregationTypeEnum = "none" | "count" | "sum" | "avg" | "min" | "max" | "median" | "mode" | "first" | "last";
 
-export function getPlotChartDataTransforms(
-    aggregationType: AggregationTypeEnum,
-    dataPoints: PlotChartDataPoints
-): PlotData["transforms"] {
-    if (aggregationType === "none") {
-        return [];
-    }
-    return [
-        {
-            type: "aggregate",
-            groups: dataPoints.x.map(dataPoint => {
-                if (dataPoint == null) {
-                    return "";
-                }
-                return typeof dataPoint === "string" || typeof dataPoint === "number"
-                    ? dataPoint.toLocaleString()
-                    : dataPoint.toLocaleDateString();
-            }),
-            aggregations: [
-                {
-                    target: "y",
-                    func: aggregationType,
-                    enabled: true
-                }
-            ]
-        }
-    ];
-}
+// export function getPlotChartDataTransforms(
+//     aggregationType: AggregationTypeEnum,
+//     dataPoints: PlotChartDataPoints
+// ): PlotData["transforms"] {
+//     if (aggregationType === "none") {
+//         return [];
+//     }
+//     return [
+//         {
+//             type: "aggregate",
+//             groups: dataPoints.x.map(dataPoint => {
+//                 if (dataPoint == null) {
+//                     return "";
+//                 }
+//                 return typeof dataPoint === "string" || typeof dataPoint === "number"
+//                     ? dataPoint.toLocaleString()
+//                     : dataPoint.toLocaleDateString();
+//             }),
+//             aggregations: [
+//                 {
+//                     target: "y",
+//                     func: aggregationType,
+//                     enabled: true
+//                 }
+//             ]
+//         }
+//     ];
+// }
 
 export const mapperHelpers: MapperHelpers = {
     // NOTE: For now ignore explicit "return undefined" statements. They exist just to make TS happy.

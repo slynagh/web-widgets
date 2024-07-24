@@ -1,34 +1,33 @@
 import {
     ChartWidget,
-    ChartWidgetProps,
-    getPlotChartDataTransforms,
+    // ChartWidgetProps,
+    // getPlotChartDataTransforms,
     traceEqual,
     usePlotChartDataSeries
 } from "@mendix/shared-charts/common";
-import "@mendix/shared-charts/ui/Chart.scss";
 import { defaultEqual, flatEqual } from "@mendix/widget-plugin-platform/utils/flatEqual";
-import classNames from "classnames";
+// import * as classNames from "classnames";
 import { ReactElement, createElement, memo, useCallback } from "react";
 import { LineChartContainerProps } from "../typings/LineChartProps";
 
-const lineChartLayoutOptions: ChartWidgetProps["layoutOptions"] = {
-    xaxis: {
-        zeroline: true,
-        fixedrange: true,
-        gridcolor: "#d7d7d7",
-        zerolinecolor: "#d7d7d7"
-    },
-    yaxis: {
-        fixedrange: true,
-        gridcolor: "#d7d7d7",
-        zeroline: true,
-        zerolinecolor: "#d7d7d7"
-    }
-};
-const lineChartConfigOptions: ChartWidgetProps["configOptions"] = {
-    responsive: true
-};
-const lineChartSeriesOptions: ChartWidgetProps["seriesOptions"] = {};
+// const lineChartLayoutOptions: ChartWidgetProps["layoutOptions"] = {
+//     xaxis: {
+//         zeroline: true,
+//         fixedrange: true,
+//         gridcolor: "#d7d7d7",
+//         zerolinecolor: "#d7d7d7"
+//     },
+//     yaxis: {
+//         fixedrange: true,
+//         gridcolor: "#d7d7d7",
+//         zeroline: true,
+//         zerolinecolor: "#d7d7d7"
+//     }
+// };
+// const lineChartConfigOptions: ChartWidgetProps["configOptions"] = {
+//     responsive: true
+// };
+// const lineChartSeriesOptions: ChartWidgetProps["seriesOptions"] = {};
 
 export const LineChart = memo(
     // disable eslint rule to have nice component name in component tree at devtools
@@ -42,7 +41,7 @@ export const LineChart = memo(
                     line.dataSet === "static" ? line.staticMarkerColor : line.dynamicMarkerColor;
 
                 return {
-                    type: "scatter",
+                    type: "line",
                     mode: line.lineStyle === "line" ? "lines" : "lines+markers",
                     line: {
                         shape: line.interpolation,
@@ -54,8 +53,8 @@ export const LineChart = memo(
                         color: markerColorExpression
                             ? getExpressionValue<string>(markerColorExpression, dataPoints.dataSourceItems)
                             : undefined
-                    },
-                    transforms: getPlotChartDataTransforms(line.aggregationType, dataPoints)
+                    }
+                    // transforms: getPlotChartDataTransforms(line.aggregationType, dataPoints)
                 };
             }, [])
         );
@@ -63,7 +62,7 @@ export const LineChart = memo(
         return (
             <ChartWidget
                 type="LineChart"
-                className={classNames("widget-line-chart", props.class)}
+                className={"widget-line-chart"}
                 data={chartLines ?? []}
                 width={props.width}
                 widthUnit={props.widthUnit}
@@ -73,13 +72,13 @@ export const LineChart = memo(
                 xAxisLabel={props.xAxisLabel?.value}
                 yAxisLabel={props.yAxisLabel?.value}
                 gridLinesMode={props.gridLines}
-                customLayout={props.customLayout}
-                customConfig={props.customConfigurations}
-                layoutOptions={lineChartLayoutOptions}
-                configOptions={lineChartConfigOptions}
-                seriesOptions={lineChartSeriesOptions}
+                // customLayout={props.customLayout}
+                // customConfig={props.customConfigurations}
+                // layoutOptions={lineChartLayoutOptions}
+                // configOptions={lineChartConfigOptions}
+                // seriesOptions={lineChartSeriesOptions}
                 enableThemeConfig={props.enableThemeConfig}
-                playground={props.playground}
+                playground={null}
             />
         );
     },

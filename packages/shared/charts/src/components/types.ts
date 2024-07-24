@@ -1,5 +1,6 @@
 import { ObjectItem } from "mendix";
-import { Config, Data, Layout } from "plotly.js";
+// import { Config, Data, Layout } from "plotly.js";
+import { ApexOptions } from "apexcharts";
 
 declare module "plotly.js" {
     interface PlotDatum {
@@ -16,17 +17,17 @@ export type ExtraTraceProps = {
     onClick?: (item: ObjectItem) => void;
 };
 
-export type PlotTrace = Partial<Data> & ExtraTraceProps;
+// export type PlotTrace = Partial<ApexOptions> & ExtraTraceProps;
 
 export interface ChartViewProps {
-    data: PlotTrace[];
-    configOptions: Partial<Config>;
-    layoutOptions: Partial<Layout>;
-    seriesOptions: Partial<Data>;
-    customConfig: string | undefined;
-    customLayout: string | undefined;
+    data?: ApexOptions["series"];
+    // configOptions: Partial<Config>;
+    // layoutOptions: Partial<Layout>;
+    // seriesOptions: Partial<Data>;
+    // customConfig: string | undefined;
+    // customLayout: string | undefined;
 }
 
 export interface ChartProps extends ChartViewProps {
-    playground: React.ReactNode | null;
+    playground?: React.ReactNode | null;
 }
