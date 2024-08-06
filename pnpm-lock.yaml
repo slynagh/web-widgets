@@ -1767,6 +1767,9 @@ importers:
       quill:
         specifier: ^2.0.2
         version: 2.0.2
+      react-modal:
+        specifier: ^3.16.1
+        version: 3.16.1(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@mendix/automation-utils':
         specifier: workspace:*
@@ -1798,6 +1801,9 @@ importers:
       '@types/dompurify':
         specifier: ^2.4.0
         version: 2.4.0
+      '@types/react-modal':
+        specifier: ^3.16.3
+        version: 3.16.3
       '@types/sanitize-html':
         specifier: ^1.27.2
         version: 1.27.2
@@ -5796,6 +5802,12 @@ packages:
       '@types/react': 18.2.36
     dev: true
 
+  /@types/react-modal@3.16.3:
+    resolution: {integrity: sha512-xXuGavyEGaFQDgBv4UVm8/ZsG+qxeQ7f77yNrW3n+1J6XAstUy5rYHeIHPh1KzsGc6IkCIdu6lQ2xWzu1jBTLg==}
+    dependencies:
+      '@types/react': 18.2.36
+    dev: true
+
   /@types/react-native@0.70.16:
     resolution: {integrity: sha512-zHPWfszSWTctG1O1gsAHTQzOC33GY7Iv/Mk44tSMkcHiUtqB1GjOZz1VLqSyxW3Qw77HX4GUHi8b1ksOFrq2KQ==}
     dependencies:
@@ -9280,6 +9292,10 @@ packages:
       onetime: 5.1.2
       signal-exit: 3.0.7
       strip-final-newline: 2.0.0
+
+  /exenv@1.2.2:
+    resolution: {integrity: sha512-Z+ktTxTwv9ILfgKCk32OX3n/doe+OcLTRtqK9pcL+JsP3J1/VW8Uvl4ZjLlKqeW4rzK4oesDOGMEMRIZqtP4Iw==}
+    dev: false
 
   /exit@0.1.2:
     resolution: {integrity: sha512-Zk/eNKV2zbjpKzrsQ+n1G6poVbErQxJ0LBOJXaKZ1EViLzH+hrLu9cdXI4zw9dBQJslwBEpbQ2P1oS7nDxs6jQ==}
@@ -13383,6 +13399,21 @@ packages:
 
   /react-lifecycles-compat@3.0.4:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
+    dev: false
+
+  /react-modal@3.16.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-VStHgI3BVcGo7OXczvnJN7yT2TWHJPDXZWyI/a0ssFNhGZWsPmB8cF0z33ewDXq4VfYMO1vXgiv/g8Nj9NDyWg==}
+    engines: {node: '>=8'}
+    peerDependencies:
+      react: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18 || 18
+      react-dom: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18 || ^18.0.0
+    dependencies:
+      exenv: 1.2.2
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-lifecycles-compat: 3.0.4
+      warning: 4.0.3
     dev: false
 
   /react-onclickoutside@6.13.0(react-dom@18.2.0)(react@18.2.0):
